@@ -128,6 +128,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -283,6 +284,13 @@ public abstract class ValueAxis extends Axis
 
     /** A flag indicating whether or not tick labels are rotated to vertical. */
     private boolean verticalTickLabels;
+    /**
+     * 图表类型
+     */
+    private String chartType;
+    public void setChartType(String _chartType) {
+    	this.chartType = _chartType;
+    }
 
     /**
      * Constructs a value axis.
@@ -714,7 +722,15 @@ public abstract class ValueAxis extends Axis
                     if (tick.getText() == null) {
                         continue;
                     }
-                    TextUtilities.drawRotatedString(tick.getText(), g2,
+                    //替换Y轴数值上的 ,(逗号)
+                    String yLabel = "";
+                    if(tick.getText() != null && !tick.getText().trim().equals("")){
+                    	yLabel = tick.getText().replaceAll(",", "");
+                    	if(this.chartType != null && this.chartType.equals("CEUP")) {
+                    		yLabel = String.format("%1.3f", tick.getValue());
+                    	}
+                    }
+                    TextUtilities.drawRotatedString(yLabel, g2,
                             anchorPoint[0], anchorPoint[1], 
                             tick.getTextAnchor(), tick.getAngle(), 
                             tick.getRotationAnchor());

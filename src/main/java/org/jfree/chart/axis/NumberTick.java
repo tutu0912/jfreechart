@@ -69,6 +69,11 @@ public class NumberTick extends ValueTick {
         this.number = number;
 
     }
+    
+    public NumberTick(Number number) {
+		super(number.doubleValue(), number.doubleValue() + "", TextAnchor.CENTER_RIGHT, TextAnchor.CENTER_RIGHT, 0.0);
+		this.number = number;
+	} 
 
     /**
      * Creates a new tick.

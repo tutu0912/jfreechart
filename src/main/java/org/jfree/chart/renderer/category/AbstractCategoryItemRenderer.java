@@ -125,11 +125,11 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.LegendItemCollection;
 import org.jfree.chart.axis.CategoryAxis;
@@ -1407,9 +1407,19 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
     protected void drawItemLabel(Graphics2D g2, PlotOrientation orientation,
             CategoryDataset dataset, int row, int column,
             double x, double y, boolean negative) {
-
+    	boolean isUp = true;
+    	if(dataset.getColumnCount() - 1 == column) {
+    		Number lastNum = dataset.getValue(row, column-1);
+    		Number nowNum = dataset.getValue(row, column);
+    		if(nowNum.floatValue() >= lastNum.floatValue()) {
+    			isUp = true;
+    		}else {
+    			isUp = false;
+    		}
+    	}
         CategoryItemLabelGenerator generator = getItemLabelGenerator(row,
                 column);
+        
         if (generator != null) {
             Font labelFont = getItemLabelFont(row, column);
             Paint paint = getItemLabelPaint(row, column);
@@ -1424,7 +1434,7 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
                 position = getNegativeItemLabelPosition(row, column);
             }
             Point2D anchorPoint = calculateLabelAnchorPoint(
-                    position.getItemLabelAnchor(), x, y, orientation);
+                    position.getItemLabelAnchor(), x, y, orientation,isUp);
             TextUtilities.drawRotatedString(label, g2,
                     (float) anchorPoint.getX(), (float) anchorPoint.getY(),
                     position.getTextAnchor(),

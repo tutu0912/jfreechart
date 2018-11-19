@@ -2787,6 +2787,133 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
      * @param x  the x coordinate.
      * @param y  the y coordinate.
      * @param orientation  the plot orientation.
+     * @param isUp 节点标注的位置是是否在节点上方
+     * @return The anchor point (never {@code null}).
+     */
+    protected Point2D calculateLabelAnchorPoint(ItemLabelAnchor anchor,
+            double x, double y, PlotOrientation orientation,boolean isUp) {
+        Point2D result = null;
+        if (anchor == ItemLabelAnchor.CENTER) {
+            result = new Point2D.Double(x, y);
+        }
+        else if (anchor == ItemLabelAnchor.INSIDE1) {
+            result = new Point2D.Double(x + OPP * this.itemLabelAnchorOffset,
+                    y - ADJ * this.itemLabelAnchorOffset);
+        }
+        else if (anchor == ItemLabelAnchor.INSIDE2) {
+            result = new Point2D.Double(x + ADJ * this.itemLabelAnchorOffset,
+                    y - OPP * this.itemLabelAnchorOffset);
+        }
+        else if (anchor == ItemLabelAnchor.INSIDE3) {
+            result = new Point2D.Double(x + this.itemLabelAnchorOffset, y);
+        }
+        else if (anchor == ItemLabelAnchor.INSIDE4) {
+            result = new Point2D.Double(x + ADJ * this.itemLabelAnchorOffset,
+                    y + OPP * this.itemLabelAnchorOffset);
+        }
+        else if (anchor == ItemLabelAnchor.INSIDE5) {
+            result = new Point2D.Double(x + OPP * this.itemLabelAnchorOffset,
+                    y + ADJ * this.itemLabelAnchorOffset);
+        }
+        else if (anchor == ItemLabelAnchor.INSIDE6) {
+            result = new Point2D.Double(x, y + this.itemLabelAnchorOffset);
+        }
+        else if (anchor == ItemLabelAnchor.INSIDE7) {
+            result = new Point2D.Double(x - OPP * this.itemLabelAnchorOffset,
+                    y + ADJ * this.itemLabelAnchorOffset);
+        }
+        else if (anchor == ItemLabelAnchor.INSIDE8) {
+            result = new Point2D.Double(x - ADJ * this.itemLabelAnchorOffset,
+                    y + OPP * this.itemLabelAnchorOffset);
+        }
+        else if (anchor == ItemLabelAnchor.INSIDE9) {
+            result = new Point2D.Double(x - this.itemLabelAnchorOffset, y);
+        }
+        else if (anchor == ItemLabelAnchor.INSIDE10) {
+            result = new Point2D.Double(x - ADJ * this.itemLabelAnchorOffset,
+                    y - OPP * this.itemLabelAnchorOffset);
+        }
+        else if (anchor == ItemLabelAnchor.INSIDE11) {
+            result = new Point2D.Double(x - OPP * this.itemLabelAnchorOffset,
+                    y - ADJ * this.itemLabelAnchorOffset);
+        }
+        else if (anchor == ItemLabelAnchor.INSIDE12) {
+            result = new Point2D.Double(x, y - this.itemLabelAnchorOffset);
+        }
+        else if (anchor == ItemLabelAnchor.OUTSIDE1) {
+            result = new Point2D.Double(
+                    x + 2.0 * OPP * this.itemLabelAnchorOffset,
+                    y - 2.0 * ADJ * this.itemLabelAnchorOffset);
+        }
+        else if (anchor == ItemLabelAnchor.OUTSIDE2) {
+            result = new Point2D.Double(
+                    x + 2.0 * ADJ * this.itemLabelAnchorOffset,
+                    y - 2.0 * OPP * this.itemLabelAnchorOffset);
+        }
+        else if (anchor == ItemLabelAnchor.OUTSIDE3) {
+            result = new Point2D.Double(x + 2.0 * this.itemLabelAnchorOffset,
+                    y);
+        }
+        else if (anchor == ItemLabelAnchor.OUTSIDE4) {
+            result = new Point2D.Double(
+                    x + 2.0 * ADJ * this.itemLabelAnchorOffset,
+                    y + 2.0 * OPP * this.itemLabelAnchorOffset);
+        }
+        else if (anchor == ItemLabelAnchor.OUTSIDE5) {
+            result = new Point2D.Double(
+                    x + 2.0 * OPP * this.itemLabelAnchorOffset,
+                    y + 2.0 * ADJ * this.itemLabelAnchorOffset);
+        }
+        else if (anchor == ItemLabelAnchor.OUTSIDE6) {
+            result = new Point2D.Double(x,
+                    y + 2.0 * this.itemLabelAnchorOffset);
+        }
+        else if (anchor == ItemLabelAnchor.OUTSIDE7) {
+            result = new Point2D.Double(
+                    x - 2.0 * OPP * this.itemLabelAnchorOffset,
+                    y + 2.0 * ADJ * this.itemLabelAnchorOffset);
+        }
+        else if (anchor == ItemLabelAnchor.OUTSIDE8) {
+            result = new Point2D.Double(
+                    x - 2.0 * ADJ * this.itemLabelAnchorOffset,
+                    y + 2.0 * OPP * this.itemLabelAnchorOffset);
+        }
+        else if (anchor == ItemLabelAnchor.OUTSIDE9) {
+            result = new Point2D.Double(x - 2.0 * this.itemLabelAnchorOffset,
+                    y);
+        }
+        else if (anchor == ItemLabelAnchor.OUTSIDE10) {
+            result = new Point2D.Double(
+                    x - 2.0 * ADJ * this.itemLabelAnchorOffset,
+                    y - 2.0 * OPP * this.itemLabelAnchorOffset);
+        }
+        else if (anchor == ItemLabelAnchor.OUTSIDE11) {
+            result = new Point2D.Double(
+                x - 2.0 * OPP * this.itemLabelAnchorOffset,
+                y - 2.0 * ADJ * this.itemLabelAnchorOffset);
+        }
+        else if (anchor == ItemLabelAnchor.OUTSIDE12) {
+//            result = new Point2D.Double(x,
+//                    y - 2.0 * this.itemLabelAnchorOffset);
+            if(isUp) {
+            	 result = new Point2D.Double(x + 2.0 * this.itemLabelAnchorOffset,
+                         y - 2.0 * this.itemLabelAnchorOffset);
+            }else {
+            	 result = new Point2D.Double(x + 2.0 * this.itemLabelAnchorOffset,
+                         y + 9.0 * this.itemLabelAnchorOffset);
+            }
+            
+        }
+        return result;
+    }
+    
+    /**
+     * Calculates the item label anchor point.
+     *
+     * @param anchor  the anchor.
+     * @param x  the x coordinate.
+     * @param y  the y coordinate.
+     * @param orientation  the plot orientation.
      *
      * @return The anchor point (never {@code null}).
      */

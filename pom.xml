@@ -8,8 +8,8 @@
 
     <name>JFreeChart</name>
 
-    <artifactId>jfreechart</artifactId>
     <groupId>org.jfree</groupId>
+    <artifactId>jfreechart</artifactId>
     <version>1.0.20-SNAPSHOT</version>
     <packaging>jar</packaging>
 
@@ -53,6 +53,12 @@
     </licenses>
 
     <dependencies>
+    	<!-- 导出PDF -->
+		<dependency>
+		    <groupId>org.eclipse.birt.runtime.3_7_1</groupId>
+		    <artifactId>com.lowagie.text</artifactId>
+		    <version>2.1.7</version>
+		</dependency>
         <dependency>
             <groupId>org.jfree</groupId>
             <artifactId>jcommon</artifactId>
@@ -65,7 +71,11 @@
             <artifactId>jfreesvg</artifactId>
             <version>3.2</version>
         </dependency>
-        
+        <dependency>
+		    <groupId>commons-io</groupId>
+		    <artifactId>commons-io</artifactId>
+		    <version>2.4</version>
+		</dependency>
         <!-- OrsonPDF enables PDF export -->
         <dependency>
             <groupId>com.orsonpdf</groupId>
@@ -117,14 +127,8 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.10</version>
                 <configuration>
-                    <includes>
-                        <include>**/*Test.java</include>
-                    </includes>
-                    <excludes>
-                        <exclude>**/JFreeChartTestSuite.java</exclude>
-                        <exclude>**/*PackageTests.java</exclude>
-                    </excludes>
-                </configuration>
+		          <skipTests>true</skipTests>
+		        </configuration>
             </plugin>
 
             <plugin>

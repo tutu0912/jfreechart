@@ -627,8 +627,47 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
     protected int calculateVisibleTickCount() {
         double unit = getTickUnit().getSize();
         Range range = getRange();
-        return (int) (Math.floor(range.getUpperBound() / unit)
+        return  (int) (Math.floor(range.getUpperBound() / unit)
                       - Math.ceil(range.getLowerBound() / unit) + 1);
+    }
+    /**
+     * 自适应Y轴刻度
+     * @return
+     */
+    protected int calculateVisibleTickCountVertical() {
+    	double unit = getTickUnit().getSize();
+        Range range = getRange();
+        int res = (int) (Math.floor(range.getUpperBound() / unit)
+                      - Math.ceil(range.getLowerBound() / unit) + 1);
+        
+    	unit = (res * unit) / 8;
+    	if(unit > 10) {
+        	String unitStr = ((int) unit) + "";
+        	int upper = Integer.parseInt(unitStr.substring(0,1));
+        	int mid = Integer.parseInt(unitStr.substring(1,2));
+//        	if(mid >= 5) {
+        		upper++;
+//        	}
+        	for(int i=1;i<unitStr.length();i++) {
+        		upper *= 10;
+        	}
+        	unit = upper;
+        	
+        	setTickUnit(new NumberTickUnit(upper),false,false);
+        	res = (int) (Math.floor(range.getUpperBound() / unit)
+                    - Math.ceil(range.getLowerBound() / unit));
+        }else if(unit > 1){
+        	
+        }else {
+        	
+        }
+    	
+    	if((range.getLowerBound() - 2 * unit) > 0) {
+        	setRange(new Range(range.getLowerBound() - 2 * unit, range.getUpperBound()));
+        }else if((range.getLowerBound() - 1 * unit) > 0) {
+        	setRange(new Range(range.getLowerBound() - 1 * unit, range.getUpperBound()));
+        }
+        return res;
     }
 
     /**
@@ -651,7 +690,6 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
     public AxisState draw(Graphics2D g2, double cursor, Rectangle2D plotArea,
             Rectangle2D dataArea, RectangleEdge edge,
             PlotRenderingInfo plotState) {
-
         AxisState state;
         // if the axis is not visible, don't draw it...
         if (!isVisible()) {
@@ -669,7 +707,6 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
         if (getAttributedLabel() != null) {
             state = drawAttributedLabel(getAttributedLabel(), g2, plotArea, 
                     dataArea, edge, state);
-            
         } else {
             state = drawLabel(getLabel(), g2, plotArea, dataArea, edge, state);
         }
@@ -1052,6 +1089,7 @@ public class NumberAxis extends ValueAxis implements Cloneable, Serializable {
         TickUnit tu = getTickUnit();
         double size = tu.getSize();
         int count = calculateVisibleTickCount();
+        
         double lowestTickValue = calculateLowestVisibleTickValue();
 
         if (count <= ValueAxis.MAXIMUM_TICK_COUNT) {
