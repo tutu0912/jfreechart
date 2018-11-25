@@ -128,7 +128,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -290,6 +289,9 @@ public abstract class ValueAxis extends Axis
     private String chartType;
     public void setChartType(String _chartType) {
     	this.chartType = _chartType;
+    }
+    public String getChartType() {
+    	return this.chartType;
     }
 
     /**

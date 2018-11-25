@@ -2790,7 +2790,7 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
      * @param isUp 节点标注的位置是是否在节点上方
      * @return The anchor point (never {@code null}).
      */
-    protected Point2D calculateLabelAnchorPoint(ItemLabelAnchor anchor,
+    protected Point2D calculateLabelAnchorPoint(String chartType,ItemLabelAnchor anchor,
             double x, double y, PlotOrientation orientation,boolean isUp) {
         Point2D result = null;
         if (anchor == ItemLabelAnchor.CENTER) {
@@ -2893,13 +2893,15 @@ public abstract class AbstractRenderer implements Cloneable, Serializable {
                 y - 2.0 * ADJ * this.itemLabelAnchorOffset);
         }
         else if (anchor == ItemLabelAnchor.OUTSIDE12) {
-//            result = new Point2D.Double(x,
-//                    y - 2.0 * this.itemLabelAnchorOffset);
+        	float xOffset = 2;
+        	if(chartType != null && chartType.equals("RSC")) {
+        		xOffset = 1;
+        	}
             if(isUp) {
-            	 result = new Point2D.Double(x + 2.0 * this.itemLabelAnchorOffset,
+            	 result = new Point2D.Double(x + xOffset * this.itemLabelAnchorOffset,
                          y - 2.0 * this.itemLabelAnchorOffset);
             }else {
-            	 result = new Point2D.Double(x + 2.0 * this.itemLabelAnchorOffset,
+            	 result = new Point2D.Double(x + xOffset * this.itemLabelAnchorOffset,
                          y + 9.0 * this.itemLabelAnchorOffset);
             }
             

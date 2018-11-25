@@ -10,8 +10,8 @@ import com.lowagie.text.DocumentException;
 public class TestImg {
 	@Test
 	public void main() throws IOException, DocumentException {
-		System.out.println("float格式化："+String.format("%1.3f", 66.5));
-		System.exit(0);
+//		System.out.println("float格式化："+String.format("%1.3f", 66.5));
+//		System.exit(0);
 		String imgFile = "F:\\test\\test.jpg";
 		ExportPdfTemplate template = new ExportPdfTemplate();
 		template.createExportFile(imgFile);

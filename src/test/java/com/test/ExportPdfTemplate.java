@@ -202,7 +202,7 @@ public class ExportPdfTemplate {
         // 设置图标题的字体重新设置title
         Font font = new Font("宋体", Font.PLAIN, 14);
         TextTitle title = new TextTitle(chartTitle);
-        title.setMargin(new RectangleInsets(20D, 00D, 0D, 00D));
+        title.setMargin(new RectangleInsets(0D, 00D, 0D, 00D));
         title.setFont(font);
         title.setPosition(RectangleEdge.RIGHT);
         chart.setTitle(title);
@@ -211,10 +211,10 @@ public class ExportPdfTemplate {
         Font labelFont = new Font("Arial", Font.BOLD, 16);
         chart.setBackgroundPaint(Color.WHITE);
         CategoryPlot categoryplot = (CategoryPlot) chart.getPlot();
-        categoryplot.setDomainGridlinesVisible(false); //x轴 网格是否可见
-        categoryplot.setRangeGridlinesVisible(false); //y轴 网格是否可见
-//        categoryplot.setRangeGridlinePaint(Color.WHITE); //x轴 虚线色彩
-//        categoryplot.setDomainGridlinePaint(Color.WHITE); //y轴 虚线色彩
+        categoryplot.setDomainGridlinesVisible(true); //x轴 网格是否可见
+        categoryplot.setRangeGridlinesVisible(true); //y轴 网格是否可见
+        categoryplot.setRangeGridlinePaint(Color.GRAY); //x轴 虚线色彩
+        categoryplot.setDomainGridlinePaint(Color.GRAY); //y轴 虚线色彩
 //        categoryplot.setBackgroundPaint(Color.WHITE);
         categoryplot.setAxisOffset(new RectangleInsets(0D, 0D, 0D, 0D));// 设置轴和面板之间的距离
         //X轴样式
@@ -243,7 +243,7 @@ public class ExportPdfTemplate {
         	}
         }
         double domain = upper - lower;
-        double tmpTick = domain / 6;
+        double tmpTick = domain / 4;
         if(tmpTick > 1000) {
         	int hight = Integer.parseInt(String.valueOf(tmpTick).substring(0, 1));
         	int mid = Integer.parseInt(String.valueOf(tmpTick).substring(1, 2));

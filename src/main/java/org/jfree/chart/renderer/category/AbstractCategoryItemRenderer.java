@@ -133,6 +133,7 @@ import java.util.Map;
 import org.jfree.chart.LegendItem;
 import org.jfree.chart.LegendItemCollection;
 import org.jfree.chart.axis.CategoryAxis;
+import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.entity.CategoryItemEntity;
 import org.jfree.chart.entity.EntityCollection;
@@ -1433,7 +1434,9 @@ public abstract class AbstractCategoryItemRenderer extends AbstractRenderer
             else {
                 position = getNegativeItemLabelPosition(row, column);
             }
-            Point2D anchorPoint = calculateLabelAnchorPoint(
+            NumberAxis numberaxis = (NumberAxis) plot.getRangeAxis();
+            String chartType = numberaxis.getChartType();
+            Point2D anchorPoint = calculateLabelAnchorPoint(chartType,
                     position.getItemLabelAnchor(), x, y, orientation,isUp);
             TextUtilities.drawRotatedString(label, g2,
                     (float) anchorPoint.getX(), (float) anchorPoint.getY(),
